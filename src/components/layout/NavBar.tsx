@@ -17,19 +17,19 @@ export default function NavBar() {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 href="/torneos"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
               >
                 Torneos
               </Link>
               <Link
                 href="/fixture"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
               >
                 Fixture
               </Link>
               <Link
                 href="/en-vivo"
-                className="border-transparent text-red-600 hover:border-red-700 hover:text-red-800 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium animate-pulse"
+                className="border-transparent text-red-600 hover:border-red-700 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium animate-pulse motion-reduce:animate-none"
               >
                 En Vivo
               </Link>
@@ -68,7 +68,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Torneo Favale. Todos los derechos reservados.
           </p>
           <div className="mt-2 text-center">
-            <Link href="/acceso-clubes" className="text-xs text-gray-300 hover:text-gray-500 transition-colors">
+            <Link href="/acceso-clubes" className="text-xs text-gray-500 hover:text-gray-700 transition-colors">
               Acceso Clubes
             </Link>
           </div>
