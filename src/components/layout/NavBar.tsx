@@ -1,11 +1,39 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 // In a real project, you would import icons from 'lucide-react'
 // import { Menu, X } from 'lucide-react';
 
 export default function NavBar() {
+  const pathname = usePathname();
+
+  const getLinkClass = (path: string, variant: 'default' | 'red' = 'default') => {
+    const isActive = pathname === path;
+    const baseClasses = "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2";
+
+    if (variant === 'red') {
+      return `${baseClasses} border-transparent text-red-600 hover:border-red-700 hover:text-red-800 focus:ring-red-500 animate-pulse motion-reduce:animate-none`;
+    }
+
+    if (isActive) {
+      return `${baseClasses} border-blue-500 text-gray-900 focus:ring-blue-500`;
+    }
+
+    return `${baseClasses} border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:ring-blue-500`;
+  };
+
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      {/* Skip to main content for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:p-4 focus:bg-white focus:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:shadow-lg rounded-md"
+      >
+        Saltar al contenido principal
+      </a>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
@@ -17,19 +45,22 @@ export default function NavBar() {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 href="/torneos"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className={getLinkClass('/torneos')}
+                aria-current={pathname === '/torneos' ? 'page' : undefined}
               >
                 Torneos
               </Link>
               <Link
                 href="/fixture"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className={getLinkClass('/fixture')}
+                aria-current={pathname === '/fixture' ? 'page' : undefined}
               >
                 Fixture
               </Link>
               <Link
                 href="/en-vivo"
-                className="border-transparent text-red-600 hover:border-red-700 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium animate-pulse motion-reduce:animate-none"
+                className={getLinkClass('/en-vivo', 'red')}
+                aria-current={pathname === '/en-vivo' ? 'page' : undefined}
               >
                 En Vivo
               </Link>
