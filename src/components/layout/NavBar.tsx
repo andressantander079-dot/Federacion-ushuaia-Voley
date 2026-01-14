@@ -1,9 +1,21 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 // In a real project, you would import icons from 'lucide-react'
 // import { Menu, X } from 'lucide-react';
 
 export default function NavBar() {
+  const pathname = usePathname();
+
+  const activeClass = "border-blue-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium";
+  const inactiveClass = "border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium";
+
+  // En Vivo keeps its red styling but gets a red border when active
+  const activeEnVivoClass = "border-red-600 text-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium animate-pulse motion-reduce:animate-none";
+  const inactiveEnVivoClass = "border-transparent text-red-600 hover:border-red-700 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium animate-pulse motion-reduce:animate-none";
+
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,19 +29,22 @@ export default function NavBar() {
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 href="/torneos"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className={pathname === '/torneos' ? activeClass : inactiveClass}
+                aria-current={pathname === '/torneos' ? 'page' : undefined}
               >
                 Torneos
               </Link>
               <Link
                 href="/fixture"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className={pathname === '/fixture' ? activeClass : inactiveClass}
+                aria-current={pathname === '/fixture' ? 'page' : undefined}
               >
                 Fixture
               </Link>
               <Link
                 href="/en-vivo"
-                className="border-transparent text-red-600 hover:border-red-700 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium animate-pulse motion-reduce:animate-none"
+                className={pathname === '/en-vivo' ? activeEnVivoClass : inactiveEnVivoClass}
+                aria-current={pathname === '/en-vivo' ? 'page' : undefined}
               >
                 En Vivo
               </Link>
