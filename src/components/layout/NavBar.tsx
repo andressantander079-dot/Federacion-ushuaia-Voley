@@ -1,35 +1,66 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
-// In a real project, you would import icons from 'lucide-react'
-// import { Menu, X } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export default function NavBar() {
+  const pathname = usePathname();
+
+  const getLinkClass = (path: string, isSpecial: boolean = false) => {
+    const active = pathname === path || (path !== '/' && pathname?.startsWith(`${path}/`));
+
+    const baseClasses = "inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200";
+
+    if (isSpecial) {
+      // En Vivo special styling
+      return `${baseClasses} ${
+        active
+          ? "border-red-600 text-red-700"
+          : "border-transparent text-red-600 hover:border-red-700 hover:text-red-800"
+      } focus:ring-red-500 animate-pulse motion-reduce:animate-none`;
+    }
+
+    return `${baseClasses} ${
+      active
+        ? "border-blue-500 text-gray-900"
+        : "border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:ring-blue-500"
+    }`;
+  };
+
+  const isCurrent = (path: string) => {
+      return pathname === path || (path !== '/' && pathname?.startsWith(`${path}/`)) ? 'page' : undefined;
+  }
+
   return (
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="text-xl font-bold text-blue-600">
+              <Link href="/" className="text-xl font-bold text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-md">
                 Torneo Favale
               </Link>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               <Link
                 href="/torneos"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className={getLinkClass('/torneos')}
+                aria-current={isCurrent('/torneos')}
               >
                 Torneos
               </Link>
               <Link
                 href="/fixture"
-                className="border-transparent text-gray-500 hover:border-blue-500 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                className={getLinkClass('/fixture')}
+                aria-current={isCurrent('/fixture')}
               >
                 Fixture
               </Link>
               <Link
                 href="/en-vivo"
-                className="border-transparent text-red-600 hover:border-red-700 hover:text-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium animate-pulse motion-reduce:animate-none"
+                className={getLinkClass('/en-vivo', true)}
+                aria-current={isCurrent('/en-vivo')}
               >
                 En Vivo
               </Link>
@@ -44,21 +75,10 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* Mobile menu placeholder - would require state to toggle */}
-
-      {/* Footer-like discrete login link (or placed here as requested) */}
-      {/* The requirement said "Implementar un link discreto en el Footer o ruta /acceso-clubes"
-          I will assume the Footer is a separate component, but I'll add a link here for demonstration
-          if this component is the main header/nav wrapper.
-      */}
+      {/* Mobile menu placeholder */}
     </nav>
   );
 }
-
-// Since the prompt asks for the discrete link, I will create a simple Footer component as well to place it there,
-// or I can assume the user will put it in their layout.
-// I'll stick to the NavBar request but also create a small Footer component block here for completeness in the file if possible,
-// or just ensure the link exists.
 
 export function Footer() {
     return (
